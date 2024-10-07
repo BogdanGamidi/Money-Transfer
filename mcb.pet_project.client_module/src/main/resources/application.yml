@@ -1,0 +1,34 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /clients
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mcb_pet_project
+    username: postgres
+    password: Nihongonodeska1
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: db/changelog/db.changelog-master.xml
+    enabled: true
+  kafka:
+    bootstrap-servers:
+      localhost: 9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        acks: 1
+        spring:
+          json:
+            add:
+              type:
+                headers: false

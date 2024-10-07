@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.example.mcb.pet_project.money_of_client_module.Applicati
+ on
+

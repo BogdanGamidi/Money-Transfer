@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>User Info</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+</head>
+
+<body>
+<div class="container my-2">
+    <div class="card">
+        <div class="card-body">
+            <div th:switch="${userInfo}" class="container my-5">
+                <span class="my-5">
+                    <a href="/clients/logout" class="btn btn-primary">
+                        <i class="fas fa-sign-out-alt"> Log Out </i>
+                    </a>
+                </span>
+                <span class="my-5">
+                    <a th:href="@{/user/getinfo/{authid}(authid=${userInfo.getId})}" class="btn btn-primary">
+                        <i class="fa fa-history" aria-hidden="true"> Operation Log </i>
+                    </a>
+                </span>
+                <table class="table table-striped table-responsive-md">
+                    <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Personal account</th>
+                        <th>Amount of money</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="userI : ${userInfo}">
+                        <td th:text="${userI.name}"></td>
+                        <td th:text="${userI.personalAccount}"></td>
+                        <td th:text="${userI.amountOfMoney}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="col-md-10">
+                    <div th:case="*">
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Phone Number</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="client : ${userInfo.listOfClients}">
+                                <td th:text="${client.getFirstName()}"></td>
+                                <td th:text="${client.getLastName()}"></td>
+                                <td th:text="${client.getPhoneNumber()}"></td>
+                                <td>
+                                    <a th:href="@{/user/update/{authid}/{id}(id=${client.getId()}, authid=${userInfo.getId})}" class="btn btn-primary">
+                                        <i class="fas fa-user-edit ml-2"> Edit </i>
+                                    </a>
+                                    <a th:href="@{/user/transferMoney/{authid}/{recipientid}(recipientid=${client.getId()}, authid=${userInfo.getId})}" class="btn btn-primary">
+                                        <i class="fab fa-bitcoin"> Money Transfer </i>
+                                    </a>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
